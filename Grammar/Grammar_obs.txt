@@ -1,0 +1,216 @@
+##################################### GRAMMAR RULES #####################################
+
+1.<PROGRAM> :== <DECLARATION>
+2.<PROGRAM> :== <ASSIGNATION>
+3.<PROGRAM> :== fonction <FUNCTION>
+4.<DECLARATION> :== TYPE <DEC_TYPE>
+5.<DEC_TYPE> :== ID <DEC_ID>
+6.<DEC_ID> :== = <F_EGAL>
+7.<DEC_ID> :== ;
+8.<DEC_ID> :== , <DEC_TYPE>
+9.<F_EGAL> :== CONST ;
+10.<F_EGAL> :== EXP ;
+11.<F_EGAL> :== ID ;
+12.<F_EGAL> :== ( <EXP>
+13.<ASSIGNATION> :== ID <ASSI_ID>
+14.<ASSI_ID> :== = <F_EGAL>
+15.<EXP> :== <ADD>
+16.<EXP> :== <SUB>
+17.<EXP> :== <MUL>
+18.<EXP> :== <DIV>
+19.<ADD> :== ID + ID <ADD_TAIL>
+20.<ADD> :== CONST + CONST <ADD_TAIL>
+21.<ADD_TAIL> :== + <F_PLUS>
+22.<ADD_TAIL> :== ) <ADD_TAIL>
+23.<ADD_TAIL> :== E
+24.<F_PLUS> :== ID <ADD_TAIL>
+25.<F_PLUS> :== CONST <ADD_TAIL>
+26.<F_PLUS> :== EXP <ADD_TAIL>
+27.<SUB> :== ID - ID <SUB_TAIL>
+28.<SUB> :== CONST - CONST <SUB_TAIL>
+29.<SUB_TAIL> :== - <F_MOINS>
+30.<SUB_TAIL> :== ) <ADD_TAIL>
+31.<SUB_TAIL> :== E
+32.<F_MOINS> :== ID <SUB_TAIL>
+33.<F_MOINS> :== CONST <SUB_TAIL>
+34.<F_MOINS> :== EXP <SUB_TAIL>
+35.<MUL> :== ID * ID <MUL_TAIL>
+36.<MUL> :== CONST * CONST <MUL_TAIL>
+37.<MUL_TAIL> :== * <F_FOIS>
+38.<MUL_TAIL> :== ) <ADD_TAIL>
+39.<MUL_TAIL> :== E
+40.<F_FOIS> :== ID <MUL_TAIL>
+41.<F_FOIS> :== CONST <MUL_TAIL>
+42.<F_FOIS> :== EXP <MUL_TAIL>
+43.<DIV> :== ID / ID <DIV_TAIL>
+44.<DIV> :== CONST / CONST <DIV_TAIL>
+45.<DIV_TAIL> :== / <F_PAR>
+46.<DIV_TAIL> :== ) <ADD_TAIL>
+47.<DIV_TAIL> :== E
+48.<F_PAR> :== ID <DIV_TAIL>
+49.<F_PAR> :== CONST <DIV_TAIL>
+50.<F_PAR> :== EXP <DIV_TAIL>
+51.<FUNCTION> :== TYPE ID ( <ARGS> ) { <STATEMENTS> retourne <RETURN> }
+52.<FUNCTION> :== vide ID ( <ARGS> ) { <STATEMENTS> retourne <RETURN> }
+53.<ARGS> :== <ARG> <ARGS_TAIL>
+54.<ARG> :== TYPE ID
+55.<ARGS_TAIL> :== , <ARGS>
+56.<ARGS_TAIL> :== E
+57.<STATEMENTS> :== <STATEMENT> <STATEMENTS_TAIL>
+58.<STATEMENT> :== <DECLARATION>
+59.<STATEMENT> :== <ASSIGNATION>
+60.<STATEMENTS_TAIL> :== <STATEMENTS>
+61.<STATEMENTS_TAIL> :== E
+62.<RETURN> :== ID ;
+63.<RETURN> :== EXP ;
+
+##################################### FIRST SETS #####################################
+
+FIRST(PROGRAM) = {TYPE, ID, fonction}
+FIRST(DECLARATION) = {TYPE}
+FIRST(ASSIGNATION) = {ID}
+FIRST(F_TYPE) = {ID}
+FIRST(F_ID) = {=, ;, ,}
+FIRST(F_ID1) = {=}
+FIRST(F_EGAL) = {CONST, ID, (}
+FIRST(EXP) = {ID, CONST}
+FIRST(ADD) = {ID, CONST}
+FIRST(ADD_TAIL) = {+, ), E}
+FIRST(F_PLUS) = {ID, CONST}
+FIRST(SUB) = {ID, CONST}
+FIRST(SUB_TAIL) = {-, ), E}
+FIRST(F_MOINS) = {ID, CONST}
+FIRST(MUL) = {ID, CONST}
+FIRST(MUL_TAIL) = {*, ), E}
+FIRST(F_FOIS) = {ID, CONST}
+FIRST(DIV) = {ID, CONST}
+FIRST(DIV_TAIL) = {/, ), E}
+FIRST(F_PAR) = {ID, CONST}
+FIRST(FUNCTION) = {TYPE, vide}
+FIRST(ARGS) = {TYPE}
+FIRST(ARG) = {TYPE}
+FIRST(ARGS_TAIL) = {,, E}
+FIRST(STATEMENTS) = {TYPE, ID}
+FIRST(STATEMENT) = {TYPE, ID}
+FIRST(STATEMENT_TAIL) = {TYPE, ID, E}
+FIRST(RETURN) = {ID, CONST}
+
+##################################### FOLLOW SETS #####################################
+
+FOLLOW(PROGRAM) = {$}
+FOLLOW(DECLARATION) = {$}
+FOLLOW(ASSIGNATION) = {$}
+FOLLOW(F_TYPE) = {$}
+FOLLOW(F_ID) = {$}
+FOLLOW(F_ID1) = {$}
+FOLLOW(F_EGAL) = {$}
+FOLLOW(EXP) = {;, +, -, *, /, )}
+FOLLOW(ADD) = {;, +, -, *, /, )}
+FOLLOW(ADD_TAIL) = {;, +, -, *, /, )}
+FOLLOW(F_PLUS) = {;, +, -, *, /, )}
+FOLLOW(SUB) = {;, +, -, *, /, )}
+FOLLOW(SUB_TAIL) = {;, +, -, *, /, )}
+FOLLOW(F_MOINS) = {;, +, -, *, /, )}
+FOLLOW(MUL) = {;, +, -, *, /, )}
+FOLLOW(MUL_TAIL) = {;, +, -, *, /, )}
+FOLLOW(F_FOIS) = {;, +, -, *, /, )}
+FOLLOW(DIV) = {;, +, -, *, /, )}
+FOLLOW(DIV_TAIL) = {;, +, -, *, /, )}
+FOLLOW(F_PAR) = {;, +, -, *, /, )}
+FOLLOW(FUNCTION) = {$}
+FOLLOW(ARGS) = {)}
+FOLLOW(ARG) = {,, )}
+FOLLOW(ARGS_TAIL) = {)}
+FOLLOW(STATEMENTS) = {retourne}
+FOLLOW(STATEMENT) = {TYPE, ID, retourne}
+FOLLOW(STATEMENT_TAIL) = {retourne}
+FOLLOW(RETURN) = {}}
+
+##################################### PREDICT SETS #####################################
+
+1.<PROGRAM> :== <DECLARATION>                                               ==> TYPE
+2.<PROGRAM> :== <ASSIGNATION>                                               ==> ID
+3.<PROGRAM> :== <FUNCTION>                                                  ==> TYPE, vide
+4.<DECLARATION> :== TYPE <DEC_TYPE>                                         ==> TYPE
+5.<DEC_TYPE> :== ID <DEC_ID>                                                ==> ID
+6.<DEC_ID> :== = <F_EGAL>                                                   ==> =
+7.<DEC_ID> :== ;                                                            ==> ;
+8.<DEC_ID> :== , <DEC_TYPE>                                                 ==> ,
+9.<F_EGAL> :== CONST ;                                                      ==> CONST
+10.<F_EGAL> :== EXP ;                                                       ==> ID, CONST
+11.<F_EGAL> :== ID ;                                                        ==> ID
+12.<F_EGAL> :== ( <EXP>                                                     ==> (
+13.<ASSIGNATION> :== ID <ASSI_ID >                                          ==> ID
+14.<ASSI_ID> :== = <F_EGAL>                                                 ==> =
+15.<EXP> :== <ADD>                                                          ==> ID, CONST
+16.<EXP> :== <SUB>                                                          ==> ID, CONST
+17.<EXP> :== <MUL>                                                          ==> ID, CONST
+18.<EXP> :== <DIV>                                                          ==> ID, CONST
+19.<ADD> :== ID + ID ADD_TAIL                                               ==> ID
+20.<ADD> :== CONST + CONST ADD_TAIL                                         ==> CONST
+21.<ADD_TAIL> :== + <F_PLUS>                                                ==> +
+22.<ADD_TAIL> :== ) <ADD_TAIL>                                              ==> )
+23.<ADD_TAIL> :== E                                                         ==> ;, +, -, *, /, ), $
+24.<F_PLUS> :== ID <ADD_TAIL>                                               ==> ID
+25.<F_PLUS> :== CONST <ADD_TAIL>                                            ==> CONST
+26.<F_PLUS> :== EXP <ADD_TAIL>                                              ==> ID, CONST
+27.<SUB> :== ID - ID SUB_TAIL                                               ==> ID
+28.<SUB> :== CONST - CONST SUB_TAIL                                         ==> CONST
+29.<SUB_TAIL> :== - <F_MOINS>                                               ==> -
+30.<SUB_TAIL> :== ) <SUB_TAIL>                                              ==> )
+31.<SUB_TAIL> :== E                                                         ==> ;, +, -, *, /, ), $
+32.<F_MOINS> :== ID <SUB_TAIL>                                              ==> ID
+33.<F_MOINS> :== CONST <SUB_TAIL>                                           ==> CONST
+34.<F_MOINS> :== EXP <SUB_TAIL>                                             ==> ID, CONST
+35.<MUL> :== ID * ID MUL_TAIL                                               ==> ID
+36.<MUL> :== CONST * CONST MUL_TAIL                                         ==> CONST
+37.<MUL_TAIL> :== * <F_FOIS>                                                ==> *
+38.<MUL_TAIL> :== ) <MUL_TAIL>                                              ==> )
+39.<MUL_TAIL> :== E                                                         ==> ;, +, -, *, /, ), $
+40.<F_FOIS> :== ID <MUL_TAIL>                                               ==> ID
+41.<F_FOIS> :== CONST <MUL_TAIL>                                            ==> CONST
+42.<F_FOIS> :== EXP <MUL_TAIL>                                              ==> ID, CONST
+43.<DIV> :== ID / ID DIV_TAIL                                               ==> ID
+44.<DIV> :== CONST / CONST DIV_TAIL                                         ==> CONST
+45.<DIV_TAIL> :== / <F_PAR>                                                 ==> /
+46.<DIV_TAIL> :== ) <DIV_TAIL>                                              ==> )
+47.<DIV_TAIL> :== E                                                         ==> ;, +, -, *, /, ), $
+48.<F_PAR> :== ID <DIV_TAIL>                                                ==> ID
+49.<F_PAR> :== CONST <DIV_TAIL>                                             ==> CONST
+50.<F_PAR> :== EXP <DIV_TAIL>                                               ==> ID, CONST
+51.<FUNCTION> :== TYPE ID ( <ARGS> ) { <STATEMENTS> retourne <RETURN> }     ==> TYPE
+52.<FUNCTION> :== vide ID ( <ARGS> ) { <STATEMENTS> retourne <RETURN> }     ==> vide
+53.<ARGS> :== <ARG> <ARGS_TAIL>                                             ==> TYPE
+54.<ARG> :== TYPE ID                                                        ==> TYPE
+55.<ARGS_TAIL> :== , <ARGS>                                                 ==> ,
+56.<ARGS_TAIL> :== E                                                        ==> )
+57.<STATEMENTS> :== <STATEMENT> <STATEMENTS_TAIL>                           ==> TYPE, ID
+58.<STATEMENT> :== <DECLARATION>                                            ==> ID
+59.<STATEMENT> :== <ASSIGNATION>                                            ==> TYPE
+60.<STATEMENTS_TAIL> :== <STATEMENTS>                                       ==> TYPE, ID
+61.<STATEMENTS_TAIL> :== E                                                  ==> retourne
+62.<RETURN> :== ID ;                                                        ==> ID
+63.<RETURN> :== EXP ;                                                       ==> ID, CONST
+
+################################################# LL1 TABLE #################################################
+                TYPE    ID          =   ,   ;   CONST       +       -       *       /       (       )       $
+PROGRAM         1       2
+DECLARATION     3
+F_TYPE                  4
+F_ID                                5   7   6
+F_ID1                               11
+F_EGAL                  8,9                     7,8                                         11
+ASSIGNATION             12
+EXP                     14,15,16,17             14,15,16,17
+ADD                     18                      19
+ADD_TAIL                                                    20,22   22      22      22              21      22
+F_PLUS                  23,25                   24,25
+SUB                     26                      27
+SUB_TAIL                                                    30      28,30   30      30              29      30
+F_MOINS                 31,33                   32,33
+MUL                     34                      35
+MUL_TAIL                                                    38      38      36,38   38              37      38
+F_FOIS                  39,41                   40,41
+DIV                     42                      43
+DIV_TAIL                                                    46      46      46      44,46           45      46
+F_PAR                   47,49                   48,49

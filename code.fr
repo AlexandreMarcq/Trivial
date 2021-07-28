@@ -1,0 +1,11 @@
+entier a = 0;
+entier b = 1;
+entier c;
+entier n = 1;
+tantque (n < 11) {
+    c = a + b;
+    a = b;
+    b = c;
+    n = n + 1;
+}
+

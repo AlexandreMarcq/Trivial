@@ -1,0 +1,63 @@
+P -> D
+P -> A
+P -> FUN
+D -> TYPE FT
+FT -> ID FI
+FI -> = FE
+FI -> ;
+FI -> , FT
+FE -> C ;
+FE -> E ;
+FE -> ID ;
+FE -> ( E
+A -> ID FI1
+FI1 -> = FE
+E -> ADD
+E -> SUB
+E -> MUL
+E -> DIV
+ADD -> ID + ID ADD'
+ADD -> C + C ADD'
+ADD' -> + F+
+ADD' -> ) ADD'
+ADD' -> EPSILON
+F+ -> ID ADD'
+F+ -> C ADD'
+F+ -> E ADD'
+SUB -> ID - ID SUB'
+SUB -> C - C SUB'
+SUB' -> - F-
+SUB' -> ) ADD'
+SUB' -> EPSILON
+F- -> ID SUB'
+F- -> C SUB'
+F- -> E SUB'
+MUL -> ID * ID MUL'
+MUL -> C * C MUL'
+MUL' -> * F*
+MUL' -> ) ADD'
+MUL' -> EPSILON
+F* -> ID MUL'
+F* -> C MUL'
+F* -> E MUL'
+DIV -> ID / ID DIV'
+DIV -> C / C DIV'
+DIV' -> / F/
+DIV' -> ) ADD'
+DIV' -> EPSILON
+F/ -> ID DIV'
+F/ -> C DIV'
+F/ -> E DIV'
+FUN -> TYPE ID ( ARGS ) { STAS retourne RETURN }
+FUN -> vide ID ( ARGS ) { STATS retourne RETURN }
+ARGS -> ARG ARGS'
+ARG -> TYPE ID
+ARGS' -> , ARGS'
+ARGS' -> EPSILON
+STAS -> STA STAS'
+STA -> D
+STA -> A
+STAS' -> STAS
+STAS' -> EPSILON
+RETURN -> ID ;
+RETURN -> E ;

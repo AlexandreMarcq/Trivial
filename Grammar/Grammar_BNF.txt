@@ -1,0 +1,92 @@
+program -> declaration
+        | assignation
+        | while
+        | if
+
+declaration -> type dec_tail
+
+dec_tail -> id dec_tail2
+
+dec_tail2 -> = egal
+          | ;
+          | , dec_tail
+
+type -> entier
+     | decimal
+
+assignation -> id assi_tail
+
+assi_tail -> = egal
+
+egal -> const ;
+     | id ;
+     | exp ;
+     | ( exp
+
+exp -> add
+    | sub
+    | mul
+    | div
+
+add -> id + id add_tail
+    | const + const add_tail
+
+add_tail -> + plus
+         | ) add_tail
+         | epsilon
+
+plus -> id add_tail
+     | const add_tail
+     | exp add_tail
+
+sub -> id - id sub_tail
+    | const - const sub_tail
+
+sub_tail -> - plus
+         | ) sub_tail
+         | epsilon
+
+moins -> id sub_tail
+      | const sub_tail
+      | exp sub_tail
+
+mul -> id * id mul_tail
+    | const * const mul_tail
+
+mul_tail -> * fois
+         | ) mul_tail
+         | epsilon
+
+fois -> id mul_tail
+     | const mul_tail
+     | exp mul_tail
+
+div -> id / id div_tail
+    | const / const div_tail
+
+div_tail -> / plus
+         | ) div_tail
+         | epsilon
+
+par -> id div_tail
+    | const div_tail
+    | exp div_tail
+
+while -> tantque ( comp_expression ) { statements }
+
+if -> si ( comp_expression ) { statements }
+    | si ( comp_expression ) { statements } sinon { statements }
+
+comp_expression -> id comp_operator const
+
+comp_operator -> ~
+              | !
+              | >
+              | <
+
+statements -> statement statements_tail
+
+statement -> program
+
+statements_tail -> statements
+                | epsilon
